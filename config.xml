@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.ionicframework.notecrypt309183" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>notecrypt</name>
+  <description>
+        #Notecrypt Client
+	Notecrypt is a very simple iPhone/Android Ionic App that is meant to be a replacement for Evernote, as I only use the basic features 
+	of evernote, on all my devices, so the limitation of (2) devices that was announced today is a problem for me, and I assume other 
+	users. Notecrypt is an encrypted note application, where the client encrypts the notes in AES256 and sends the notes to the server.
+	Enjoy fork, whatever.
+	--John
+    </description>
+  <author email="john@notecrypt.io" href="https://notecrypt.io/">
+      John Hass
+    </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="SplashScreenDelay" value="2000"/>
+  <preference name="FadeSplashScreenDuration" value="2000"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+</widget>

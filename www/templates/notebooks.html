@@ -1,0 +1,9 @@
+<ion-view view-title="Notebooks">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="notebook in notebooks" href="#/app/notes/{{notebook.id}}">
+        {{notebook.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

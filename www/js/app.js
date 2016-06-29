@@ -1,21 +1,25 @@
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform,$state,$ionicSideMenuDelegate) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
+    }
+    if (isLoggedIn == false) {
+        $ionicSideMenuDelegate.canDragContent(false);
+        $state.go("app.login");
+    } else {
+
     }
   });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('app', {
     url: '/app',
     abstract: true,
@@ -30,6 +34,24 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+  .state('app.login', {
+    url: '/login',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/login.html',
+	controller: 'loginController'
+      }
+    }
+  })
+  .state('app.createaccount', {
+    url: '/createaccount',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/create.html',
+	controller: 'createAccount'
+      }
+    }
+  })
   .state('app.notebooks', {
       url: '/notebooks',
       views: {
@@ -39,8 +61,5 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
   });
-  // if none of the above states are matched, use this as the fallback
-
-
   $urlRouterProvider.otherwise('/app/notebooks');
 });

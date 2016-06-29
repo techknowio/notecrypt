@@ -1,0 +1,28 @@
+<ion-view hide-nav-bar="true">
+  <ion-header-bar>
+    <h1 class="title">Notecrypt Create Account</h1>
+  </ion-header-bar>
+  <ion-content has-bouncing="false" has-header="true">
+    <form ng-submit="doLogin()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input type="email" ng-model="loginData.email">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password</span>
+          <input type="password" ng-model="loginData.password1">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Password (Repeat)</span>
+          <input type="password" ng-model="loginData.password2">
+        </label>
+	<br />
+	<div align="center">
+          <button class="button button-balanced" ng-click="create();" style="width: 45%">Create Account</button>
+          <button class="button button-assertive" ng-click="cancel();" style="width: 45%">Cancel</button>
+	</div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

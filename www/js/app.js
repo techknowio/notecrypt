@@ -1,6 +1,6 @@
 angular.module('starter', ['ionic', 'starter.controllers'])
 
-.run(function($ionicPlatform,$state,$ionicSideMenuDelegate) {
+.run(function($ionicPlatform,$state,$ionicSideMenuDelegate,$http) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -9,12 +9,29 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-    if (isLoggedIn == false) {
-        $ionicSideMenuDelegate.canDragContent(false);
-        $state.go("app.login");
-    } else {
-
-    }
+    //Let's check the login
+    var request = $http({
+        method: "post",
+        url: "/api/api.php",
+        data: {
+            email: email,
+            password: password,
+            command: "login"
+        },
+        headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+        }).success(function (data, status, headers, config) {
+        if (data.error == 1) {
+            $ionicSideMenuDelegate.canDragContent(false);
+            $state.go("app.login");
+        } else {
+            var storage = window.localStorage;
+            storage.setItem("email", email);
+            storage.setItem("password", password);
+            $state.go("app.notebooks");
+        }
+        }).error(function (data, status, headers, config) {
+            console.log(data + " " + status);
+        });
   });
 })
 

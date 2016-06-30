@@ -1,5 +1,16 @@
 <ion-view view-title="Notebooks">
   <ion-content>
+    <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <button class="button button-clear button-positive" ng-click="reset()">
+            Refresh
+        </button>
+      </ion-nav-buttons>
+     </ion-nav-bar>
     <ion-list>
       <ion-item ng-repeat="notebook in notebooks" href="#/app/notes/{{notebook.id}}">
         {{notebook.title}}

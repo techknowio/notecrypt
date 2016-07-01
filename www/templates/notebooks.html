@@ -1,5 +1,4 @@
 <ion-view view-title="Notebooks">
-  <ion-content>
     <ion-nav-bar class="bar-stable nav-title-slide-ios7">
       <ion-nav-buttons side="left">
         <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -11,9 +10,11 @@
         </button>
       </ion-nav-buttons>
      </ion-nav-bar>
-    <ion-list>
-      <ion-item ng-repeat="notebook in notebooks" href="#/app/notes/{{notebook.id}}">
-        {{notebook.title}}
+  <ion-content>
+    <ion-list show-delete="false" can-swipe="true">
+      <ion-item can-delete="true" ng-repeat="notebook in notebooks" href="#/app/notes/{{notebook.notebook.id}}">
+        {{notebook.notebook.title}}
+	<ion-option-button ng-click="removeItem(notebook.notebook.id)" class="button-assertive icon ion-trash-a"></ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>

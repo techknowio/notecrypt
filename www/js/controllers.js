@@ -144,6 +144,38 @@ angular.module('starter.controllers', [])
     $ionicSideMenuDelegate.canDragContent(true);
     $ionicNavBarDelegate.showBackButton(false);
     $scope.notebooks = [];
+
+    $scope.removeItem = function(item) {
+        var request = $http({
+            method: "post",
+            url: "/api/api.php",
+            data: {
+                email: email,
+                password: password,
+		id: item,
+                command: "deletenotebook"
+            },
+            headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+            }).success(function (data, status, headers, config) {
+		if (data.error == 1) {
+                    var alertPopup = $ionicPopup.alert({
+                	title: data.errortitle,
+                	template: data.errormsg
+            	    });
+            	    return;
+		} else {
+
+		}
+	    }).error(function (data, status, headers, config) {
+		    console.log(data + " " + status);
+	    });
+        for(i = 0; i < $scope.notebooks.length; i++) {
+            if($scope.notebooks[i].notebook.id == item){
+                $scope.notebooks.splice(i, 1);
+            }
+        }
+    }
+
     $scope.$watch('$viewContentLoading', function(){
         var request = $http({
             method: "post",
@@ -163,12 +195,12 @@ angular.module('starter.controllers', [])
             	return;
             } else {
                 $scope.notebooks=data.notebooks;
+		console.log($scope.notebooks);
                 console.log(JSON.stringify(data));
                 console.log(JSON.stringify(data.notebooks));
     		}
 	    }).error(function (data, status, headers, config) {
 		    console.log(data + " " + status);
 	    });
-
     });
 });

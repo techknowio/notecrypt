@@ -145,6 +145,52 @@ angular.module('starter.controllers', [])
     $ionicNavBarDelegate.showBackButton(false);
     $scope.notebooks = [];
 
+    $scope.addNoteBook = function() {
+        $scope.data = {};
+        var myPopup = $ionicPopup.show({
+            template: '<input type="text" ng-model="data.newnotebookname">',
+            title: 'Enter A Notebook Name',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        if (!$scope.data.newnotebookname) {
+                            e.preventDefault();
+                        } else {
+                            var notebookname = $scope.data.newnotebookname;
+                            var request = $http({
+                                method: "post",
+                                url: "/api/api.php",
+                                data: {
+                                    email: email,
+                                    password: password,
+                            		notebookname: notebookname,
+                                    command: "addnotebook"
+                                },
+                                headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+                            }).success(function (data, status, headers, config) {
+                    		if (data.error == 1) {
+                                var alertPopup = $ionicPopup.alert({
+                            	title: data.errortitle,
+                            	template: data.errormsg
+                       	    });
+                     	    return;
+                    		} else {
+                                $scope.notebooks=data.notebooks;
+                    		}
+	                        }).error(function (data, status, headers, config) {
+                    		    console.log(data + " " + status);
+                    	    });        
+                        }
+                    }
+                }
+            ]
+        });
+    };
+
     $scope.removeItem = function(item) {
         var request = $http({
             method: "post",
@@ -188,10 +234,12 @@ angular.module('starter.controllers', [])
             headers : {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
             }).success(function (data, status, headers, config) {
 		    if (data.error == 1) {
-                var alertPopup = $ionicPopup.alert({
-                	title: data.errortitle,
-                	template: data.errormsg
-            	});
+                if (email !== null && password !== null) {
+                    var alertPopup = $ionicPopup.alert({
+                	    title: data.errortitle,
+                    	template: data.errormsg
+                	});
+                }
             	return;
             } else {
                 $scope.notebooks=data.notebooks;
